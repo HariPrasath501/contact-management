@@ -1,0 +1,161 @@
+/* General Styles */
+body {
+    font-family:'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+    background-color:black;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 20px;
+    background-color: rgb(247, 238, 238);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    color: #f8efef;
+    margin-bottom: 20px;
+    background-color: #1f1e1e;
+    padding: 30px;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.form-container h3{
+    text-align: center;
+    font-size: 2rem;
+    color: black;
+}
+.form-container span{
+    color: #0ce3eb;
+}
+/* Form and Contact List */
+.form-container, .contact-list {
+    margin: 20px 0;
+}
+.contact-list h3{
+    text-align: center;
+    font-size: 2rem;
+    color: black;
+}
+
+.contact-list span{
+    color: #0ce3eb;
+}
+/* Input Fields */
+input[type="text"], input[type="number"], button {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Buttons */
+button {
+    background-color:black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #292828;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #0d37f0;
+    color: white;
+}
+
+table td {
+    background-color: #f9f9f9;
+}
+
+/* Make the table responsive */
+.contact-list {
+    overflow-x: auto; /* Enables horizontal scroll */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+table {
+    min-width: 600px; /* Ensures the table doesn't shrink too much */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    input[type="text"], input[type="number"], button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    table th, table td {
+        font-size: 12px;
+    }
+
+    /* Stack table rows on small screens */
+    .contact-list table, .contact-list td, .contact-list th {
+        display: block;
+        width: 100%;
+        text-align: right;
+    }
+
+    .contact-list td {
+        position: relative;
+        padding-left: 50%;
+    }
+
+    .contact-list td:before {
+        content: attr(data-label); /* Add custom label to each cell */
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}

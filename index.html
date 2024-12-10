@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Management System</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Management System</h1>
+
+        <!-- Form to Add New Contact -->
+        <div class="form-container">
+            <h3>Add New <span> Contact </span></h3>
+            <form id="contact-form">
+                <input type="text" id="firstname" placeholder="Firstname" required>
+                <input type="text" id="lastname" placeholder="Lastname" required>
+                <input type="text" id="gender" placeholder="Gender" required>
+                <input type="number" id="age" placeholder="Age" required>
+                <input type="text" id="address" placeholder="Address" required>
+                <input type="text" id="contact" placeholder="Contact" required>
+                <button type="submit">Add New</button>
+            </form>
+        </div>
+
+        <!-- Contact List -->
+        <div class="contact-list">
+            <h3>Contact <span>List</span></h3>
+            <table id="contacts-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="contact-list-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        // Fetch all contacts
+        function fetchContacts() {
+            $.get('http://127.0.0.1:5000/contacts', function(data) {
+                const tbody = $('#contact-list-body');
+                tbody.empty();
+                data.forEach(contact => {
+                    tbody.append(`
+                        <tr>
+                            <td>${contact.id}</td>
+                            <td>${contact.Firstname}</td>
+                            <td>${contact.Lastname}</td>
+                            <td>${contact.Gender}</td>
+                            <td>${contact.Age}</td>
+                            <td>${contact.Address}</td>
+                            <td>${contact.Contact}</td>
+                            <td><button onclick="deleteContact(${contact.id})">Delete</button></td>
+                        </tr>
+                    `);
+                });
+            });
+        }
+
+        // Add a new contact
+        $('#contact-form').on('submit', function(e) {
+            e.preventDefault();
+            const contactData = {
+                firstname: $('#firstname').val(),
+                lastname: $('#lastname').val(),
+                gender: $('#gender').val(),
+                age: $('#age').val(),
+                address: $('#address').val(),
+                contact: $('#contact').val()
+            };
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/contacts',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(contactData),
+                success: function(response) {
+                    alert(response.message || response.error);
+                    fetchContacts();
+                    $('#contact-form')[0].reset();
+                },
+                error: function(error) {
+                    alert('Error adding contact: ' + error.responseJSON.error);
+                }
+            });
+        });
+
+        // Delete a contact
+        function deleteContact(id) {
+            if (confirm('Are you sure you want to delete this contact?')) {
+                $.ajax({
+                    url: `http://127.0.0.1:5000/contacts/${id}`,
+                    type: 'DELETE',
+                    success: function(response) {
+                        alert(response.message || response.error);
+                        fetchContacts();
+                    },
+                    error: function(error) {
+                        alert('Error deleting contact: ' + error.responseJSON.error);
+                    }
+                });
+            }
+        }
+
+        // Initial fetch of contacts
+        $(document).ready(function() {
+            fetchContacts();
+        });
+    </script>
+</body>
+</html>
